@@ -69,12 +69,10 @@ def prepare_routes(routes_file):
         add_btree_node(btree, net, mask);
     return btree;
 
-def save_routes(result_file, push_routes):
-    for net in push_routes.keys():
-        route = push_routes[net][0];
-        iplist = push_routes[net][1];
-        result_file.write('push "route %s %s net_gateway 5"\n' % (net, route[1]));
-        print 'route %s %s %s' % (net, route[1], '|'.join(iplist));
+def save_route(ovpn_conf, route, ip):
+    ovpn_conf_file = open(ovpn_conf, 'a');
+    ovpn_conf_file.write('push "route %s %s net_gateway 5"\n' % (route[0], route[1]));
+    print 'route %s %s %s' % (route[0], route[1], ip);
 
 def process_ip(ip, chnroutes):
     try:
@@ -99,27 +97,28 @@ def process_ip(ip, chnroutes):
     return p_last_leaf;
 
 def run(args):
-    request_ips_file = args[1];
-    routes_file = args[2];
-    push_routes_file = args[3];
+    routes_file = args[1];
+    ovpn_conf = args[2];
 
     chnroutes = prepare_routes(routes_file);
-    result_file = file(push_routes_file, 'w');
-    push_routes = {};
-    for ip in file(request_ips_file, 'r'):
+    ip = '';
+    routes_map = {};
+    while True:
+        ip = sys.stdin.readline();
+        print 'Get ip %s' % ip;
+        if '' == ip:
+            break;
         route = process_ip(ip, chnroutes);
         if (None == route):
             print "%s doesn't found route." % ip;
             continue;
-        if (not push_routes.has_key(route[0])):
-            push_routes[route[0]] = (route, [ip.strip()]);
-        else:
-            push_routes[route[0]][1].append(ip.strip());
-    save_routes(result_file, push_routes);
-    result_file.close();
+        if (route[0] in routes_map):
+            continue;
+        routes_map[route[0]] = 1;
+        save_route(ovpn_conf, route, ip);
 
 if __name__ == "__main__":
-    logfile = open('./log', 'w');
+    logfile = open('/var/tmp/filter_new_route.log', 'w');
     sys.stdout = logfile;
     run(sys.argv);
     logfile.close();
