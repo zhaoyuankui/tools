@@ -75,6 +75,18 @@ def save_route(ovpn_conf, route, ip):
     ovpn_conf_file.close();
     print 'route %s %s %s' % (route[0], route[1], ip);
 
+def init_routes_map(routes_map, ovpn_conf):
+    ovpn_conf_file = open(ovpn_conf, 'r');
+    for line in ovpn_conf_file:
+        if (-1 == line.find('net_gateway')):
+            continue;
+        route_segments = line.split(' ');
+        if (len(route_segments) < 4):
+            print "Error push route line: %s." % line.strip();
+            continue;
+        routes_map[route_segments[2]] = 1;
+    ovpn_conf_file.close();
+
 def process_ip(ip, chnroutes):
     try:
         ip_n = socket.ntohl(struct.unpack("I",socket.inet_aton(str(ip)))[0]);
@@ -104,6 +116,7 @@ def run(args):
     chnroutes = prepare_routes(routes_file);
     ip = '';
     routes_map = {};
+    init_routes_map(routes_map, ovpn_conf);
     while True:
         ip = sys.stdin.readline();
         if '' == ip:
