@@ -7,7 +7,7 @@
 ########################################################################
  
 """
-File: prepare_push_routes.py
+File: filter_new_route.py
 Author: kevin(kevin@baidu.com)
 Date: 2018/03/27 18:32:36
 """
@@ -72,6 +72,7 @@ def prepare_routes(routes_file):
 def save_route(ovpn_conf, route, ip):
     ovpn_conf_file = open(ovpn_conf, 'a');
     ovpn_conf_file.write('push "route %s %s net_gateway 5"\n' % (route[0], route[1]));
+    ovpn_conf_file.close();
     print 'route %s %s %s' % (route[0], route[1], ip);
 
 def process_ip(ip, chnroutes):
@@ -105,7 +106,6 @@ def run(args):
     routes_map = {};
     while True:
         ip = sys.stdin.readline();
-        print 'Get ip %s' % ip;
         if '' == ip:
             break;
         route = process_ip(ip, chnroutes);
