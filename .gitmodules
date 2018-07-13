@@ -1,0 +1,6 @@
+[submodule "tools-chfilename"]
+	path = tools-chfilename
+	url = https://github.com/zhaoyuankui/tools-chfilename.git
+[submodule "chfilename"]
+	path = chfilename
+	url = https://github.com/zhaoyuankui/tools-chfilename.git
