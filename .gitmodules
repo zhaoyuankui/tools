@@ -7,3 +7,6 @@
 [submodule "tools-comake"]
 	path = tools-comake
 	url = https://github.com/zhaoyuankui/tools-comake.git
+[submodule "tools-condense"]
+	path = tools-condense
+	url = https://github.com/zhaoyuankui/tools-condense.git
