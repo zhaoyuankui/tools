@@ -10,3 +10,6 @@
 [submodule "tools-condense"]
 	path = tools-condense
 	url = https://github.com/zhaoyuankui/tools-condense.git
+[submodule "tools-vpn-chnroutes"]
+	path = tools-vpn-chnroutes
+	url = https://github.com/zhaoyuankui/tools-vpn-chnroutes.git
