@@ -13,3 +13,6 @@
 [submodule "tools-vpn-chnroutes"]
 	path = tools-vpn-chnroutes
 	url = https://github.com/zhaoyuankui/tools-vpn-chnroutes.git
+[submodule "tools-parse-curl-header"]
+	path = tools-parse-curl-header
+	url = https://github.com/zhaoyuankui/tools-parse-curl-header.git
