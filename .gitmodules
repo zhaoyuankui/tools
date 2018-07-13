@@ -4,3 +4,6 @@
 [submodule "chfilename"]
 	path = chfilename
 	url = https://github.com/zhaoyuankui/tools-chfilename.git
+[submodule "tools-comake"]
+	path = tools-comake
+	url = https://github.com/zhaoyuankui/tools-comake.git
